@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    {%for r in recipes%}
+      <h1 class="title">{{r.DishName}}</h1>
+      <h6 class="time">{{r.CookTime}}</h6>
+      <p class="prod">{{r.Procedure}}</p>
+      <iframe id="rvid" width="560" height="315" src="{{r.YoutubeLink}}" frameborder="0" allowfullscreen></iframe>
+    {% endfor %}
+  </body>
+</html>

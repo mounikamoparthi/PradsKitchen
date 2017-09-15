@@ -7,19 +7,21 @@
         <link rel="stylesheet" href="{% static 'recipeadmin/css/font-awesome-4.7.0/css/font-awesome.css' %}">
     </head>
     <body>
-
+        {% for e in errors %}
+          <p>{{e}}</p>
+        {% endfor %}
          <h1> Add a new recipe </h1>
         <form id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post">
         {% csrf_token %}
             <p>
             <label for="DishName">DishName:</label>
-            <input type="text" id ="DishName" name="DishName">
+            <input type="text" id ="" name="DishName">
             </p><p>
             <label for="CookTime">CookTime:</label>
             <input type="text" id ="CookTime" name="CookTime"> min
             </p><p>
             <label for="procedure">Procedure:</label><br>
-            <textarea name = "procedure" rows = "8" cols = "80"></textarea>
+            <textarea name = "Procedure" rows = "8" cols = "80"></textarea>
             </p><p>
             <p id="ingredient"> Ingredients: </p><i id="imore" class="fa fa-plus" aria-hidden="true"></i><br>
             <p>Qty:</p><input type="text" id="qty" name="qty" value="">
@@ -34,7 +36,7 @@
                 <option value = {{c.id}}>{{c.CategoryName}}</option>
             {% endfor %}
             </select>
-            <p>YouTube Link: </p><input type="text" name="url" value=""><br>
+            <p>YouTube Link: </p><input type="text" name="YoutubeLink" value=""><br>
             <button id="create">Create</button>
 
         </form>
