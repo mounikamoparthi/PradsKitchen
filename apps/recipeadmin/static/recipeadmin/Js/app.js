@@ -1,44 +1,55 @@
 var ingredient;
-
+var ing_count=1
 function context_vars(obj){
 
         ingredient = JSON.parse(obj);
-        
+
+}
+function new_qty(i, value){
+  var qty_str="<input type='hidden' name='qty"+i+"'' value='"+value+"' >"
+  return qty_str
+}
+
+function new_ing(i, value){
+  var ing_str="</p><input type='hidden' name='ing"+i+"'' value='"+value+"' >"
+  return ing_str
 }
 
 
 $(document).ready (function (){
-    $(document).on('click','p#test', function(){
-        var d=$('recipeForm')
-        console.log(d)
-    // $.ajax({
-    //     url: $(this).attr('action'),
-    //     type: 'POST',
-    //     contentType:'application/json',
-    //     data: d,
-    //     dataType: 'json'
-    // })
-    })
+  // x=new_ingredient(ing_count)
+  // $(x[0]).insertAfter("p#ing")
+  // $(x[1]).insertAfter("p#ing")
+
     console.log("Ready");
     $(document).on('click',"i#imore",function(){
-    //      str="<input type='text' name='new_ingredient' ><i id='imore' class='fa fa-plus' aria-hidden='true'></i><br>" 
-    //         +"<select name = 'Ingredient'>"     
-    //     var name=""
-    //     var id=""
-    //    for(var i in ingredient){
-    //       name = ingredient[i]["fields"]["Name"]
-    //       id= ingredient[i]["fields"]["pk"]
-    //     //    console.log(ingredient[i]["fields"]["Name"])
-    //     str + " <option value ='"+ id+ "'>"+name+"</option>"
-           
-    //    }
- 
-    //     str+ "</select>"
-           
-        $(str).insertAfter("p#ing")
-        
-        console.log("imore")
+      var curr_ing=$('#ing').val()
+      var curr_qty=$('#qty').val()
+      var i= new_ing(ing_count,curr_ing)
+      var q= new_qty(ing_count,curr_qty)
+      console.log(i)
+      console.log(q)
+      $(i).insertAfter("p#ingredient")
+      $(q).insertAfter("p#ingredient")
+      var str= curr_qty+" of "+ curr_ing
+      $("div.inglist").append("<p>"+str+"</p>")
+      ing_count++
+      $('#ing').val("")
+        $('#qty').val("")
     })
 
-    
+    $(document).on('click','button#create',function(){
+      var curr_ing=$('#ing').val()
+      var curr_qty=$('#qty').val()
+      var i= new_ing(ing_count,curr_ing)
+      var q= new_qty(ing_count,curr_qty)
+      $(i).insertAfter("p#ingredient")
+      $(q).insertAfter("p#ingredient")
+      $('#ing').remove()
+      $('#qty').remove()
+      $("#recipeform").submit()
+
+    })
+
+
 })

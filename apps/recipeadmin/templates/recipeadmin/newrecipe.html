@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{% static 'recipeadmin/css/font-awesome-4.7.0/css/font-awesome.css' %}">
     </head>
     <body>
-       
+
          <h1> Add a new recipe </h1>
         <form id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post">
         {% csrf_token %}
@@ -21,24 +21,23 @@
             <label for="procedure">Procedure:</label><br>
             <textarea name = "procedure" rows = "8" cols = "80"></textarea>
             </p><p>
-            <p id="ing"> Ingredients:   </p><input type="text" name="new_ingredient" value=""><i id="imore" class="fa fa-plus" aria-hidden="true"><br>
-           </i>
-            <p id = "quant "> Quantity:  </p><input type="text" name="quantity" value="">
-           
-
+            <p id="ingredient"> Ingredients: </p><i id="imore" class="fa fa-plus" aria-hidden="true"></i><br>
+            <p>Qty:</p><input type="text" id="qty" name="qty" value="">
+            <p>Ing:</p><input type="text" id ="ing" name="ing" value="">
+            <div class="inglist">
+              <p>Mounika</p>
+            </div>
             <p id="cat">Category:</p><input type="text" name="new_category" value=""><br>
             <select name = "Category">
+                <option ></option>
             {% for c in categories %}
                 <option value = {{c.id}}>{{c.CategoryName}}</option>
             {% endfor %}
             </select>
-            <p id="test">Test</p>
-            </p>
-        
+            <p>YouTube Link: </p><input type="text" name="url" value=""><br>
+            <button id="create">Create</button>
+
         </form>
-       <script type = "text/javascript">
-           var cd = "{{ serializeding }}".replace(/&quot;/g,"\"")
-           context_vars(cd)
-        </script>
+
     </body>
 </html>
