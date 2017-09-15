@@ -1,0 +1,23 @@
+<html>
+    <head>
+       <title>Admin Login</title>
+        
+   
+    </head>
+    <body>
+         <h1> Login </h1>
+        <form action="{% url 'recipeadmin:new_path' %}" method ="post">
+        {% csrf_token %}
+            <p>
+            <label for="email">Email:</label>
+            <input type="text" id ="email" name="email"
+            </p><p>
+            <label for="password">Password:</label>
+            <input type="password" id ="password" name="password"
+            </p><p>
+           
+            <input  type="submit" value="Login">
+            </p>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,44 @@
+<html>
+    <head>
+       <title>Recipe Form</title>
+       {% load staticfiles %}
+        <script rel = "javascript" src = "{% static 'recipeadmin/Js/jquery-3.2.1.min.js' %}"></script>
+        <script rel = "javascript" src = "{% static 'recipeadmin/Js/app.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'recipeadmin/css/font-awesome-4.7.0/css/font-awesome.css' %}">
+    </head>
+    <body>
+       
+         <h1> Add a new recipe </h1>
+        <form id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post">
+        {% csrf_token %}
+            <p>
+            <label for="DishName">DishName:</label>
+            <input type="text" id ="DishName" name="DishName">
+            </p><p>
+            <label for="CookTime">CookTime:</label>
+            <input type="text" id ="CookTime" name="CookTime"> min
+            </p><p>
+            <label for="procedure">Procedure:</label><br>
+            <textarea name = "procedure" rows = "8" cols = "80"></textarea>
+            </p><p>
+            <p id="ing"> Ingredients:   </p><input type="text" name="new_ingredient" value=""><i id="imore" class="fa fa-plus" aria-hidden="true"><br>
+           </i>
+            <p id = "quant "> Quantity:  </p><input type="text" name="quantity" value="">
+           
+
+            <p id="cat">Category:</p><input type="text" name="new_category" value=""><br>
+            <select name = "Category">
+            {% for c in categories %}
+                <option value = {{c.id}}>{{c.CategoryName}}</option>
+            {% endfor %}
+            </select>
+            <p id="test">Test</p>
+            </p>
+        
+        </form>
+       <script type = "text/javascript">
+           var cd = "{{ serializeding }}".replace(/&quot;/g,"\"")
+           context_vars(cd)
+        </script>
+    </body>
+</html>
