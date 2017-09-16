@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
-from ..recipe.models import Recipes,Ingredients, Mix, Category
+from ..recipe.models import Recipes, Mix, Category
 
 
 # Create your views here.

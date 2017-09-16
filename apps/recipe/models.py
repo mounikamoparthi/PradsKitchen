@@ -30,14 +30,16 @@ class RecipeManager(models.Manager):
 
 
 
-class IngredientManager(models.Manager):
-
-    def check_ingredient(self,postData):
-        results={'status': True, 'errors':[], 'ingredient':None}
-        if not postData['Name'] or len(postData['Name'])<3:
-            print "Ingredient Error"
-            results['status'] = False
-            results['errors'].append("Please enter valid Ingredient")
+# class IngredientManager(models.Manager):
+#
+#     def check_ingredient(self,postData):
+#         print postData
+#         results={'status': True, 'errors':[], 'ingredient':None}
+#         if len(postData)==0:
+#             print "Ingredient Error"
+#             results['status'] = False
+#             results['errors'].append("Please name the ingredients")
+#         return results
 
 class CategoryManager(models.Manager):
 
@@ -59,34 +61,37 @@ class MixManager(models.Manager):
             results['errors'].append("Please enter valid Quantity")
 
 
-
-
-# Create your models here.
-class Recipes(models.Model):
-    DishName = models.CharField(max_length=255)
-    CookTime = models.CharField(max_length=78)
-    Procedure = models.TextField()
-    YoutubeLink = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
-    objects = RecipeManager()
-
-class Ingredients(models.Model):
-    Name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
-    objects = IngredientManager()
-
 class Category(models.Model):
     CategoryName = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = CategoryManager()
 
+# Create your models here.
+class Recipes(models.Model):
+    DishName = models.CharField(max_length=255)
+    CookTime = models.CharField(max_length=78)
+    Procedure = models.TextField()
+    CategoryId = models.ForeignKey(Category,related_name="createdcategory")
+    YoutubeLink = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    objects = RecipeManager()
+    # def __unicode__(self):
+    #     return self.DishName
+
+# class Ingredients(models.Model):
+#     Name = models.CharField(max_length=100)
+#     created_at = models.DateTimeField(auto_now_add = True)
+#     updated_at = models.DateTimeField(auto_now = True)
+#     objects = IngredientManager()
+
+
+
 class Mix(models.Model):
     Quantity = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
-    IngredientId = models.ForeignKey(Ingredients, related_name="createdingred")
+    IngredientName = models.CharField(max_length=255)
     RecipeId = models.ForeignKey(Recipes, related_name="createdrecipes")
     objects = MixManager()
