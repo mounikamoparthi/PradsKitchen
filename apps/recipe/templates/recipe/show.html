@@ -9,8 +9,9 @@
 
     {%for r in recipes%}
       <h1 class="title">{{r.DishName}}</h1>
-      <h6 class="time">Cook time:{{r.CookTime}} mins</h6>
+      <h4 class="time">Cook time:{{r.CookTime}} mins</h4>
       <p class="prod">{{r.Procedure}}</p>
+       <h3> Ingredients: </h3> 
       {%for m in mixes%}
         {% ifequal m.RecipeId.id r.id%}
           <ul>
@@ -19,6 +20,7 @@
         {% endifequal %}
 
       {% endfor %}
+      <h3> Youtube Video: </h3>
       <iframe id="rvid" width="560" height="315" src="{{r.YoutubeLink}}" frameborder="0" allowfullscreen></iframe>
     {% endfor %}
   </body>

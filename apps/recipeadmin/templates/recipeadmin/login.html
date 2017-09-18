@@ -19,5 +19,31 @@
             <input  type="submit" value="Login">
             </p>
         </form>
+        <h2> Register new User as admin </h2>
+        <form action= "{% url 'recipeadmin:register'%}" method ="post">
+        {% csrf_token %}
+        <p>
+        <label for="first_name">FirstName:</label>
+        <input type="text" id ="firstname" name="first_name">
+        </p>
+        <p>
+        <label for="last_name">LastName:</label>
+        <input type="text" id ="lastname" name="last_name">
+        </p>
+        <p>
+        <label for="emailid">EmailId:</label>
+        <input type="text" id ="emailid" name="emailid">
+
+        </p><p>
+        <label for="password">Password:</label>
+        <input type="password" id ="password" name="password">
+        </p>
+        <p>
+        <label for="reenterpassword">Reenter Password:</label>
+        <input type="password" id ="password" name="reenterpassword">
+        </p><p>
+        <input  type="submit" value="Register">
+        </form>
+
     </body>
 </html>
