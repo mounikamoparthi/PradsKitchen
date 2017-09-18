@@ -15,6 +15,9 @@ def index(request):
 
 def show(request):
     context={
-        'recipes': Recipes.objects.all()
+        'recipes': Recipes.objects.all(),
+        'mixes': Mix.objects.all(),
+        'f': "x",
+        "s": "x"
     }
     return render(request, 'recipe/show.html', context);

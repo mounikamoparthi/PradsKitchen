@@ -11,7 +11,7 @@ function new_qty(i, value){
 }
 
 function new_ing(i, value){
-  var ing_str="</p><input type='hidden' name='ing"+i+"'' value='"+value+"' >"
+  var ing_str="</p><input type='hidden' name='igr"+i+"'' value='"+value+"' >"
   return ing_str
 }
 
@@ -41,13 +41,22 @@ $(document).ready (function (){
     $(document).on('click','button#create',function(){
       var curr_ing=$('#ing').val()
       var curr_qty=$('#qty').val()
-      var i= new_ing(ing_count,curr_ing)
-      var q= new_qty(ing_count,curr_qty)
-      $(i).insertAfter("p#ingredient")
-      $(q).insertAfter("p#ingredient")
-      $('#ing').remove()
-      $('#qty').remove()
-      $("#recipeform").submit()
+      console.log(curr_ing.length)
+      if (curr_ing.length>0&&curr_qty.length>0){
+        var i= new_ing(ing_count,curr_ing)
+        var q= new_qty(ing_count,curr_qty)
+        $(i).insertAfter("p#ingredient")
+        $(q).insertAfter("p#ingredient")
+        $('#ing').remove()
+        $('#qty').remove()
+        $("#recipeform").submit()
+      }
+      else{
+          $('#ing').remove()
+          $('#qty').remove()
+          $("#recipeform").submit()
+      }
+
 
     })
 

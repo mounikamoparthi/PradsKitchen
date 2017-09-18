@@ -31,24 +31,41 @@ def create(request):
 
     if (len(new_cat)!=0):
         f=Category.objects.filter(CategoryName =new_cat)
+        print ("category line 34"*10)
         if (len(f)==0):
             Category.objects.create(CategoryName=new_cat)
             catID=Category.objects.latest('id')
         else:
             print("Cat Id"*100)
             print f
-            catID=f[0]['id']
+            catID=f[0]
+    else:
+        category=Category.objects.filter(CategoryName=request.POST['Category'])[0]
+        catID=category
 
     # Grabbing list of ingredients
+    mixes={}
     List_of_quantity=[]
     List_of_ingredients=[]
     for key in request.POST:
-        if (re.match(r'[ing]',key)):
-            print "brook"
-            List_of_ingredients.append(request.POST[key])
-        if (re.match(r'[qty]',key)):
-            print "Monica"
-            List_of_quantity.append(request.POST[key])
+        if (re.match(r'[igr]',key)):
+            # print(request.POST)
+            num=re.search(r'\d+',key).group()
+            mixes[num]=[request.POST[key]]
+            # List_of_ingredients.append(request.POST[key])
+    for qty in request.POST:
+        if (re.match(r'[qty]',qty)):
+                # print(request.POST)
+                # print (qty)
+                num= re.search(r'\d+',qty).group()
+                mixes[num].append(request.POST[qty])
+
+    print("mixes"*10)
+    print(mixes)
+
+    # *****check
+    # mixes[i][0]=="Ingredient"
+    # mixes[i][1]=="quantity"
 
     # Seperating inputs for RecipeManager
     I_data={
@@ -64,14 +81,26 @@ def create(request):
     #         Ingredients.objects.create(Name=k)
 
 
+    # Creating new Recipe and grabbing recipe Id
+    Recipe_id=None
     results=Recipes.objects.check_recipe(I_data)
     if (results['status']):
+        print("Category Id line 84"*10,catID)
         Recipes.objects.create(DishName=I_data['DishName'],Procedure=I_data['Procedure'],CookTime=I_data['CookTime'],YoutubeLink=I_data['YoutubeLink'],CategoryId=catID)
+        Recipe_id=Recipes.objects.latest('id')
+        for n in mixes:
+            Mix.objects.create(Quantity=mixes[n][1],IngredientName=mixes[n][0],RecipeId=Recipe_id)
+
         return redirect(reverse('recipe:show_path'))
+
+
+
+
     else:
         context={
             'errors': results['errors'],
             'categories': Category.objects.all(),
         }
         return render(request, 'recipeadmin/newrecipe.html', context)
+
     return redirect(reverse ('recipe:index_path'))

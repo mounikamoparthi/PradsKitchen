@@ -14,29 +14,29 @@
         <form id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post">
         {% csrf_token %}
             <p>
-            <label for="DishName">DishName:</label>
-            <input type="text" id ="" name="DishName">
+            <label for="DishName" >DishName:</label>
+            <input type="text" id ="" name="DishName" value="Chocolate">
             </p><p>
-            <label for="CookTime">CookTime:</label>
-            <input type="text" id ="CookTime" name="CookTime"> min
+            <label for="CookTime" >CookTime:</label>
+            <input type="text" id ="CookTime" name="CookTime" value="34"> min
             </p><p>
-            <label for="procedure">Procedure:</label><br>
-            <textarea name = "Procedure" rows = "8" cols = "80"></textarea>
+            <label for="procedure" >Procedure:</label><br>
+            <textarea name = "Procedure" rows = "8" cols = "80" ></textarea>
             </p><p>
             <p id="ingredient"> Ingredients: </p><i id="imore" class="fa fa-plus" aria-hidden="true"></i><br>
-            <p>Qty:</p><input type="text" id="qty" name="qty" value="">
-            <p>Ing:</p><input type="text" id ="ing" name="ing" value="">
+            <p>Qty:</p><input type="text" id="qty" name="qty" value="2kg">
+            <p>Ing:</p><input type="text" id ="ing" name="igr" value="Cocoa">
             <div class="inglist">
-              <p>Mounika</p>
+
             </div>
-            <p id="cat">Category:</p><input type="text" name="new_category" value=""><br>
+            <p id="cat">Category:</p><input type="text" name="new_category" value="Dessert"><br>
             <select name = "Category">
                 <option ></option>
             {% for c in categories %}
                 <option value = {{c.id}}>{{c.CategoryName}}</option>
             {% endfor %}
             </select>
-            <p>YouTube Link: </p><input type="text" name="YoutubeLink" value=""><br>
+            <p>YouTube Link: </p><input type="text" name="YoutubeLink" value="https://www.youtube.com/embed/5rIKqgDHAiQ"><br>
             <button id="create">Create</button>
 
         </form>
