@@ -3,18 +3,44 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
+from django.contrib import messages
+from .models import User
 from ..recipe.models import Recipes, Mix, Category
 import json
 import re
 
+def index(request):
+    return render(request,'recipeadmin/login.html')
 
 # Create your views here.
 def login(request):
-    return render(request, 'recipeadmin/login.html')
+    result = User.objects.loginval(request.POST)
+    if not result['status']:
+        for error in result['errors']:
+            messages.error(request,error)
+        return redirect(reverse('recipeadmin:index_path'))
+    else:
+        # messages.success(request,"Successful")
+        request.session['emailid'] = result['user'].emailid
+        request.session['first_name'] = result['user'].first_name
+        request.session['user_id'] = result['user'].id
+        print result['user'].emailid
+        return render(request,'recipeadmin/register.html')
 
+def registration(request):
+    result = User.objects.register(request.POST)
+    if not result['status']:
+        for error in result['errors']:
+            messages.error(request,error)
+            return render(request,'recipeadmin/register.html')
+    else:
+        # messages.success(request,"Successful")
+        return redirect(reverse('recipeadmin:new_path'))
+    
+
+    
 def new(request):
-    print request.POST['email']
-
+   
     context = {
         'categories': Category.objects.all(),
 
@@ -104,3 +130,6 @@ def create(request):
         return render(request, 'recipeadmin/newrecipe.html', context)
 
     return redirect(reverse ('recipe:index_path'))
+
+
+

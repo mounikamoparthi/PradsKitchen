@@ -1,0 +1,73 @@
+<html>
+    <head>
+       <title>Admin Register</title>
+         {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'recipeadmin/css/register.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">     
+   
+    </head>
+    <body>
+        
+       
+        <div class="container">
+             <a href = "{% url 'recipeadmin:new_path' %}"> <h3>Click here to add a new Recipe</h3> </a><br>
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        	<div class="panel panel-default">
+                
+        		<div class="panel-heading">
+			    		<h3 class="panel-title"><strong>Register a new User</strong> </h3>
+                         </div>
+                    <div class = "errormsgs">
+                            {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><strong>{{ message|escape }}</strong></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+			 			<div class="panel-body">
+
+			    		<form action= "{% url 'recipeadmin:reg_path'%}" method ="post"role="form">
+                            {% csrf_token %}
+			    			<div class="row">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="form-group">
+			    				<input type="email" name="emailid" id="emailid" class="form-control input-sm" placeholder="Email Address">
+			    			</div>
+
+			    			<div class="row">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="password" name="reenterpassword" id="reenterpassword" class="form-control input-sm" placeholder="Confirm Password">
+			    					</div>
+			    				</div>
+			    			</div>
+			    			
+			    			<input type="submit" value="Register" class="btn btn-info btn-block">
+			    		
+			    		</form>
+			    	</div>
+	    		</div>
+    		</div>
+    	</div>
+    </div>
+    </body>
+</html>
