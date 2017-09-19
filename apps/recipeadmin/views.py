@@ -14,17 +14,17 @@ def index(request):
 
 # Create your views here.
 def login(request):
-    result = User.objects.loginval(request.POST)
-    if not result['status']:
-        for error in result['errors']:
-            messages.error(request,error)
-        return redirect(reverse('recipeadmin:index_path'))
-    else:
-        # messages.success(request,"Successful")
-        request.session['emailid'] = result['user'].emailid
-        request.session['first_name'] = result['user'].first_name
-        request.session['user_id'] = result['user'].id
-        print result['user'].emailid
+    # result = User.objects.loginval(request.POST)
+    # if not result['status']:
+    #     for error in result['errors']:
+    #         messages.error(request,error)
+    #     return redirect(reverse('recipeadmin:index_path'))
+    # else:
+    #     # messages.success(request,"Successful")
+    #     request.session['emailid'] = result['user'].emailid
+    #     request.session['first_name'] = result['user'].first_name
+    #     request.session['user_id'] = result['user'].id
+    #     print result['user'].emailid
         return redirect(reverse('recipeadmin:new_path'))
 
 def registration(request):
@@ -100,10 +100,10 @@ def create(request):
 
     # Seperating inputs for RecipeManager
     I_data={
-        "DishName": str(request.POST['DishName']),
-        "Procedure": str(request.POST['Procedure']),
-        "CookTime":  str(request.POST['CookTime']),
-        "YoutubeLink":  str(request.POST['YoutubeLink']),
+        "DishName": request.POST['DishName'],
+        "Procedure": request.POST['Procedure'],
+        "CookTime":  request.POST['CookTime'],
+        "YoutubeLink":  request.POST['YoutubeLink'],
     }
 
     # iresults=Ingredients.objects.check_ingredient(List_of_ingredients)

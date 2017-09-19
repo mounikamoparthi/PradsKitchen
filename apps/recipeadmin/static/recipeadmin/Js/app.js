@@ -6,13 +6,22 @@ function context_vars(obj){
 
 }
 function new_qty(i, value){
-  var qty_str="<input type='hidden' name='qty"+i+"'' value='"+value+"' >"
+  var qty_str="<input id='iq"+i+"' type='hidden' name='qty"+i+"'' value='"+value+"' >"
   return qty_str
 }
 
 function new_ing(i, value){
-  var ing_str="</p><input type='hidden' name='igr"+i+"'' value='"+value+"' >"
+  var ing_str="</p><input id='ii"+i+"' type='hidden' name='igr"+i+"'' value='"+value+"' >"
   return ing_str
+}
+function remove_ingredient(id){
+  console.log("removed ingredient with id :"+id)
+  input_id="#ii"+id
+  quantity_id="#iq"+id
+  list_id="#list"+id
+  $(input_id).remove()
+  $(quantity_id).remove()
+  $(list_id).remove()
 }
 
 
@@ -32,10 +41,10 @@ $(document).ready (function (){
       $(i).insertAfter("p#ingredient")
       $(q).insertAfter("p#ingredient")
       var str= curr_qty+" of "+ curr_ing
-      $("div.inglist").append("<p>"+str+"</p>")
+      $("div.inglist").append("<p id='list"+ing_count+"'>"+str+" <i class='remove fa fa-times' aria-hidden='true' value="+ing_count+"> </i> </p>")
       ing_count++
       $('#ing').val("")
-        $('#qty').val("")
+      $('#qty').val("")
     })
 
     $(document).on('click','button#create',function(){
@@ -59,6 +68,10 @@ $(document).ready (function (){
 
 
     })
+    $(document).on('click','i.remove',function(){
+      remove_ingredient($(this).attr('value'))
+    })
+
 
 
 })
