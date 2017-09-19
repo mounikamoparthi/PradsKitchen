@@ -5,40 +5,93 @@
         <script rel = "javascript" src = "{% static 'recipeadmin/Js/jquery-3.2.1.min.js' %}"></script>
         <script rel = "javascript" src = "{% static 'recipeadmin/Js/app.js' %}"></script>
         <link rel="stylesheet" href="{% static 'recipeadmin/css/font-awesome-4.7.0/css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'recipeadmin/css/newrecipe.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
     </head>
     <body>
-        {% for e in errors %}
-          <p>{{e}}</p>
-        {% endfor %}
-         <h1> Add a new recipe </h1>
-        <form id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post">
-        {% csrf_token %}
-            <p>
-            <label for="DishName" >DishName:</label>
-            <input type="text" id ="" name="DishName" value="Chocolate">
-            </p><p>
-            <label for="CookTime" >CookTime:</label>
-            <input type="text" id ="CookTime" name="CookTime" value="34"> min
-            </p><p>
-            <label for="procedure" >Procedure:</label><br>
-            <textarea name = "Procedure" rows = "8" cols = "80" ></textarea>
-            </p><p>
-            <p id="ingredient"> Ingredients: </p><i id="imore" class="fa fa-plus" aria-hidden="true"></i><br>
-            <p>Qty:</p><input type="text" id="qty" name="qty" value="2kg">
-            <p>Ing:</p><input type="text" id ="ing" name="igr" value="Cocoa">
-            <div class="inglist">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-5">
+                            <div class = "errormessages">
+                                {% for e in errors %}
+                                <p>{{e}}</p>
+                                {% endfor %}
+                            </div>
+                            <h1> Add a new recipe </h1>
+                            <form class="form-horizontal" id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post" role="form">
+                             {% csrf_token %}
+                                 <div class="form-group">
+                                    <label for="DishName" class="col-sm-3 control-label">
+                                        DishName: </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="DishName" name = "DishName" placeholder="Name of the Dish" required>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label for="CookTime" class="col-sm-3 control-label">
+                                        CookTime: </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="CookTime" name = "CookTime" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label for="procedure" class="col-sm-3 control-label">
+                                        Procedure: </label>
+                                    <div class="col-sm-9">
+                                       <textarea name = "Procedure" rows = "8" cols = "80" placeholder="Enter the Process" required ></textarea> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Ingredients" class="col-sm-3 control-label">
+                                        Ingredients: </label>
+                                    <div class="col-sm-9">
+                                        <div class="col-sm-offset-1 col-sm-5">
+                                            <p id="ingredient"></p><i id="imore" class="fa fa-plus"></i><br>
+                                        </div>
+                                        <input type="text" class="form-control" id="qty" name = "qty" placeholder="Quantity" required>
+                                        <input type="text" class="form-control" id="ing" name = "igr" placeholder="Ingredient" required>
+                                    </div>
+                                    <div class="inglist">
 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Category" class="col-sm-3 control-label">
+                                        Category: </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="new_category" placeholder="Breakfast/Lunch/Snacks/Dessert" required>
+                                        <select name = "Category" class="form-control">
+                                                <option></option>
+                                            {% for c in categories %}
+                                                <option value = {{c.id}}>{{c.CategoryName}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="YouTube Link" class="col-sm-3 control-label">
+                                        YouTube Link:</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="YoutubeLink" placeholder="Enter url" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group last">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" id = "create" class="btn btn-success btn-sm">
+                                           Create</button>
+                                    </div>
+                                </div>
+                    </div>
             </div>
-            <p id="cat">Category:</p><input type="text" name="new_category" value="Dessert"><br>
-            <select name = "Category">
-                <option ></option>
-            {% for c in categories %}
-                <option value = {{c.id}}>{{c.CategoryName}}</option>
-            {% endfor %}
-            </select>
-            <p>YouTube Link: </p><input type="text" name="YoutubeLink" value="https://www.youtube.com/embed/5rIKqgDHAiQ"><br>
-            <button id="create">Create</button>
-
+                            <div class="form-group">
+								<div class="col-sm-offset-11 col-sm-10">
+									<a href = "{% url 'recipeadmin:reg_path' %}"> <h4>Click here to add a new Admin </h4> </a><br>
+								</div>
+							</div>
+        </div>
+                                
         </form>
 
     </body>

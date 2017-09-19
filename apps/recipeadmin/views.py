@@ -25,14 +25,19 @@ def login(request):
         request.session['first_name'] = result['user'].first_name
         request.session['user_id'] = result['user'].id
         print result['user'].emailid
-        return render(request,'recipeadmin/register.html')
+        return redirect(reverse('recipeadmin:new_path'))
 
 def registration(request):
+    return render(request,'recipeadmin/register.html')
+
+def reg(request):
+    print request.POST
     result = User.objects.register(request.POST)
     if not result['status']:
         for error in result['errors']:
             messages.error(request,error)
             return render(request,'recipeadmin/register.html')
+            # return redirect(reverse('recipeadmin:register_path'))
     else:
         # messages.success(request,"Successful")
         return redirect(reverse('recipeadmin:new_path'))
@@ -118,9 +123,6 @@ def create(request):
             Mix.objects.create(Quantity=mixes[n][1],IngredientName=mixes[n][0],RecipeId=Recipe_id)
 
         return redirect(reverse('recipe:show_path'))
-
-
-
 
     else:
         context={

@@ -41,7 +41,7 @@ class UserManager(models.Manager):
             return results
 
      def register(self, postData):
-            print "in def1"
+            print "in def2"
             results = {'status': True, 'errors': [],'user':None}
             if not postData['first_name'] or len(postData['first_name']) <3:
                 print "fname error"
