@@ -4,8 +4,27 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  overflow: hidden;
+  
 }
+
 .centered-form{
 	margin-top: 60px;
 }
 
+.errormessages{
+    color: red;
+}
+.linkref {
+  color: #4b2ea0;
+  /* display: inline-block; */
+  padding: 0 8px 8px 8px;
+  /* margin-right: 100px;  */
+  /* line-height: 20px; */
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0;
+  border: none;
+  outline: none;
+   float: right; 
+   margin: 2px 2px 2px 2px;
+}

@@ -9,7 +9,9 @@ from ..recipe.models import Recipes, Mix, Category
 import json
 import re
 
+
 def index(request):
+    
     return render(request,'recipeadmin/login.html')
 
 # Create your views here.
@@ -25,34 +27,55 @@ def login(request):
         request.session['first_name'] = result['user'].first_name
         request.session['user_id'] = result['user'].id
         print result['user'].emailid
+        # status="loggedin"
         return redirect(reverse('recipeadmin:new_path'))
 
+
 def registration(request):
+    if not 'user_id' in request.session:
+        return redirect(reverse('recipeadmin:index_path'))
     return render(request,'recipeadmin/register.html')
 
 def reg(request):
     print request.POST
     result = User.objects.register(request.POST)
     if not result['status']:
-        for error in result['errors']:
-            messages.error(request,error)
-            return render(request,'recipeadmin/register.html')
+            context={
+                    'errors': result['errors'],
+                }
+        
+            return render(request, 'recipeadmin/register.html', context)
             # return redirect(reverse('recipeadmin:register_path'))
     else:
-        # messages.success(request,"Successful")
+        request.session['emailid'] = result['user'].emailid
+        request.session['user_id'] = result['user'].id
         return redirect(reverse('recipeadmin:new_path'))
-    
 
-    
-def new(request):
-   
+def edit(request):
+    if not 'user_id' in request.session:
+        return redirect(reverse('recipeadmin:index_path'))
     context = {
-        'categories': Category.objects.all(),
-
+        'users': User.objects.all()
     }
+    return render(request,'recipeadmin/editadmin.html', context)
+
+def deleteuser(request,id):
+    user1=User.objects.get(id=request.session["user_id"])
+    user1.remove()
+    return redirect(reverse('recipeadmin:editadmin_path'))
+
+
+def new(request):
+    if not 'user_id' in request.session:
+        return redirect(reverse('recipeadmin:index_path'))
+    context = {
+            'categories': Category.objects.all(),
+        }
     return render(request, 'recipeadmin/newrecipe.html', context)
 
 def create(request):
+  if not 'user_id' in request.session:
+    return redirect(reverse('recipeadmin:index_path'))
     print("*"*100)
     print (type(request.POST["DishName"]))
     print("keys"*10)
@@ -133,5 +156,12 @@ def create(request):
 
     return redirect(reverse ('recipe:index_path'))
 
+def logout(request):
+    # session_keys = list(request.session.keys())
+    # for k in request.session.keys():
+    #     request.session.modified=True
+    #     request.session.pop(k,None)
+    request.session.clear()
 
+    return redirect('recipeadmin:index_path')
 

@@ -6,12 +6,13 @@ from django.core.urlresolvers import reverse
 from ..recipe.models import Recipes, Mix, Category
 
 
+
 # Create your views here.
 def index(request):
     # context={
     #     'recipes': Recipes.objects.all()
     # }
-    return render(request, 'recipe/index.html');
+    return render(request, 'recipe/index.html')
 
 def show(request):
     context={
@@ -20,4 +21,5 @@ def show(request):
         'f': "x",
         "s": "x"
     }
-    return render(request, 'recipe/show.html', context);
+    return render(request, 'recipe/show.html', context)
+    
