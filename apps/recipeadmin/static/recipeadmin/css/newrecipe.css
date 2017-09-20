@@ -10,19 +10,20 @@ body {
 .form-group.last { margin-bottom:0px; }
 
 .linkref {
-color: black;
-  /* display: inline-block; */
+  color: #4b2ea0;
+   /* sdisplay: inline-block;   */
   padding: 0 8px 8px 8px;
-  /* margin-right: 100px;  */
-  /* line-height: 20px; */
+  /* margin-left: 700px;   */
+  line-height: 20px; 
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0;
   border: none;
   outline: none;
-   float: right; 
+  float: right;
    margin: 2px 2px 2px 2px;
-  
-  
+}
+.sidecolor{
+  color: #4b2ea0;
 }
 
 
