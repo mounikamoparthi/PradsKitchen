@@ -47,8 +47,7 @@ def reg(request):
             return render(request, 'recipeadmin/register.html', context)
             # return redirect(reverse('recipeadmin:register_path'))
     else:
-        request.session['emailid'] = result['user'].emailid
-        request.session['user_id'] = result['user'].id
+       
         return redirect(reverse('recipeadmin:new_path'))
 
 def edit(request):
@@ -60,11 +59,15 @@ def edit(request):
     return render(request,'recipeadmin/editadmin.html', context)
 
 def deleteuser(request,id):
-    user1=User.objects.get(id=request.session["user_id"])
-    user1.remove()
-    return redirect(reverse('recipeadmin:editadmin_path'))
+    try:
+        user=User.objects.get(id=id)
+        user.delete()
+        return redirect(reverse('recipeadmin:editadmin_path'))
 
-
+    except:
+         return redirect(reverse('recipeadmin:editadmin_path'))
+    # user1=User.objects.get(id=request.session["user_id"])
+   
 def new(request):
     if not 'user_id' in request.session:
         return redirect(reverse('recipeadmin:index_path'))
@@ -157,11 +160,11 @@ def create(request):
     return redirect(reverse ('recipe:index_path'))
 
 def logout(request):
-    # session_keys = list(request.session.keys())
-    # for k in request.session.keys():
-    #     request.session.modified=True
-    #     request.session.pop(k,None)
-    request.session.clear()
+    session_keys = list(request.session.keys())
+    for k in request.session.keys():
+        request.session.modified=True
+        request.session.pop(k,None)
+    # request.session.clear()
 
     return redirect('recipeadmin:index_path')
 

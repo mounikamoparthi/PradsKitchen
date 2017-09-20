@@ -1,28 +1,47 @@
 <html>
     <head>
-       <title>Quotes</title>        
+       <title>Edit Admin</title>        
         {% load staticfiles %}
-            <link rel="stylesheet" href="{% static 'recipeadmin/css/editadmin.css' %}">
+
+        <link rel="stylesheet" href="{% static 'recipeadmin/css/editadmin.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">     
     </head>
     <body>
+       <div class="container">
+           <div class="row centered-form">
+                 <div class="row">
+				<a href = "{% url 'recipeadmin:new_path' %}" class="linkref"> <h4>Click here to add a new Recipe </h4> </a>
+				<a href = "{% url 'recipeadmin:logout_path' %}" class="linkref"> <h4>Logout </h4> </a><br>
+                    </div>
+			    		<h3 class="panel-title"><strong>Edit Admin</strong> </h3><br>
+                        <table class = "table table-hover">
+                            <tr>
+                                <thead>
+                                    <th> # </th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email Id </th>
+                                    <th>Action </th>
+                                </thead>
+                            </tr> 
+                            <tbody>
+                                
+                                {% for u in users %} 
+                                    <tr>
+                                            <th scope="row">{{u.id}}</th>                                        
+                                            <td>{{u.first_name}}</td>
+                                            <td>{{u.last_name}}</td>
+                                            <td>{{u.emailid}}</td> 
+                                            <td> <a href="{% url 'recipeadmin:delete_path' u.id %}" >Remove</a></td>
+                                            
+                                    </tr>  
+                                {% endfor %}
+                             </tbody>
+                 </table>  
+            </div>
+        </div>
        
-          <table style="width:50%">
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email Id </th>
-                <th>Action </th>
-            </tr> 
-           
-            {% for u in users %} 
-                <tr>
-                        <td>{{u.first_name}}</td>
-                        <td>{{u.last_name}}</td>
-                        <td>{{u.emailid}}</td> 
-                       <td> <a href={% url 'recipeadmin:delete_path' u.id %} >Remove</a></td>
-                        
-                     </tr>  
-            {% endfor %}
-        </table>  
+
+     
     </body>
 </html>

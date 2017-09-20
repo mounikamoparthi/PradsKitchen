@@ -1,4 +1,22 @@
-table, th, td {
- border-style: solid;
-     border-color: black;
+body { 
+  background: url('images/Rustic-background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+  
+}
+.linkref {
+  color: #d4b07e;
+  /* display: inline-block; */
+  padding: 0 8px 8px 8px;
+  /* margin-right: 100px;  */
+  /* line-height: 20px; */
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0;
+  border: none;
+  outline: none;
+   float: right; 
+   margin: 2px 2px 2px 2px;
 }
