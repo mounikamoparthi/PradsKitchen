@@ -77,8 +77,8 @@ def new(request):
     return render(request, 'recipeadmin/newrecipe.html', context)
 
 def create(request):
-  if not 'user_id' in request.session:
-    return redirect(reverse('recipeadmin:index_path'))
+#   if not 'user_id' in request.session:
+#     return redirect(reverse('recipeadmin:index_path'))
     print("*"*100)
     print (type(request.POST["DishName"]))
     print("keys"*10)
