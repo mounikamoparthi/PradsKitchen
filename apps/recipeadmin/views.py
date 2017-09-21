@@ -8,8 +8,15 @@ from .models import User
 from ..recipe.models import Recipes, Mix, Category
 import json
 import re
+from django.core.files.storage import FileSystemStorage
+import requests
 
 def index(request):
+    # r=requests.get("https://www.googleapis.com/auth/youtube.readonly")
+    # context={
+    #     'r':r.json()
+    # }
+    # print(context['r'])
     return render(request,'recipeadmin/login.html')
 
 # Create your views here.
@@ -25,41 +32,66 @@ def login(request):
     #     request.session['first_name'] = result['user'].first_name
     #     request.session['user_id'] = result['user'].id
     #     print result['user'].emailid
+    #     status="loggedin"
         return redirect(reverse('recipeadmin:new_path'))
 
+
 def registration(request):
+    if not 'user_id' in request.session:
+        return redirect(reverse('recipeadmin:index_path'))
     return render(request,'recipeadmin/register.html')
 
 def reg(request):
     print request.POST
     result = User.objects.register(request.POST)
     if not result['status']:
-        for error in result['errors']:
-            messages.error(request,error)
-            return render(request,'recipeadmin/register.html')
+            context={
+                    'errors': result['errors'],
+                }
+        
+            return render(request, 'recipeadmin/register.html', context)
             # return redirect(reverse('recipeadmin:register_path'))
     else:
-        # messages.success(request,"Successful")
+        request.session['emailid'] = result['user'].emailid
+        request.session['user_id'] = result['user'].id
         return redirect(reverse('recipeadmin:new_path'))
-    
 
-    
-def new(request):
-   
+def edit(request):
+    if not 'user_id' in request.session:
+        return redirect(reverse('recipeadmin:index_path'))
     context = {
-        'categories': Category.objects.all(),
-
+        'users': User.objects.all()
     }
+    return render(request,'recipeadmin/editadmin.html', context)
+
+def deleteuser(request,id):
+    user1=User.objects.get(id=request.session["user_id"])
+    user1.remove()
+    return redirect(reverse('recipeadmin:editadmin_path'))
+
+
+def new(request):
+    # if not 'user_id' in request.session:
+    #     return redirect(reverse('recipeadmin:index_path'))
+    context = {
+            'categories': Category.objects.all(),
+        }
     return render(request, 'recipeadmin/newrecipe.html', context)
 
 def create(request):
-    print("*"*100)
-    print (type(request.POST["DishName"]))
-    print("keys"*10)
+    # print (request)
+    # if not 'user_id' in request.session:
+    #     return redirect(reverse('recipeadmin:index_path'))
     new_cat=request.POST['new_category']
     catID=None
     # Checking and creating Id (Retrieving Category Id)
-
+    print (request.FILES['foodimg'])
+    if((len(new_cat)==0) and (len(request.POST['Category']))==0):
+        context={
+            'errors': ["Please name the category of the recipe"],
+            'categories': Category.objects.all(),
+        }
+        return render(request, 'recipeadmin/newrecipe.html', context)
     if (len(new_cat)!=0):
         f=Category.objects.filter(CategoryName =new_cat)
         print ("category line 34"*10)
@@ -71,7 +103,9 @@ def create(request):
             print f
             catID=f[0]
     else:
-        category=Category.objects.filter(CategoryName=request.POST['Category'])[0]
+        print("Categgory"*100)
+        print(request.POST['Category'])
+        category=Category.objects.filter(id=request.POST['Category'])[0]
         catID=category
 
     # Grabbing list of ingredients
@@ -106,18 +140,21 @@ def create(request):
         "YoutubeLink":  request.POST['YoutubeLink'],
     }
 
-    # iresults=Ingredients.objects.check_ingredient(List_of_ingredients)
-    # if (iresults['status']):
-    #     for k in List_of_ingredients:
-    #         Ingredients.objects.create(Name=k)
-
+    # image upload
+    foodImage = request.FILES['foodimg']
+    description=request.POST['Description']
+    # fs = FileSystemStorage()
+    # filename = fs.save(myfile.name, myfile)
+    # uploaded_file_url = fs.url(filename)
+    # print ("uploaded file url "*50)
+    # print (uploaded_file_url)
 
     # Creating new Recipe and grabbing recipe Id
     Recipe_id=None
     results=Recipes.objects.check_recipe(I_data)
     if (results['status']):
         print("Category Id line 84"*10,catID)
-        Recipes.objects.create(DishName=I_data['DishName'],Procedure=I_data['Procedure'],CookTime=I_data['CookTime'],YoutubeLink=I_data['YoutubeLink'],CategoryId=catID)
+        Recipes.objects.create(DishName=I_data['DishName'],Procedure=I_data['Procedure'],CookTime=I_data['CookTime'],YoutubeLink=I_data['YoutubeLink'],CategoryId=catID,Image=foodImage, Description=description)
         Recipe_id=Recipes.objects.latest('id')
         for n in mixes:
             Mix.objects.create(Quantity=mixes[n][1],IngredientName=mixes[n][0],RecipeId=Recipe_id)
@@ -134,4 +171,12 @@ def create(request):
     return redirect(reverse ('recipe:index_path'))
 
 
+def logout(request):
+    # session_keys = list(request.session.keys())
+    # for k in request.session.keys():
+    #     request.session.modified=True
+    #     request.session.pop(k,None)
+    request.session.clear()
+
+    return redirect('recipeadmin:index_path')
 

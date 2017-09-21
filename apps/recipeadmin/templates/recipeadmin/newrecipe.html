@@ -13,13 +13,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-5">
+                     <div class="row">
+								<a href = "{% url 'recipeadmin:reg_path' %}" class="linkref"> <h4>Click here to add a new Admin </h4> </a>
+                                <a href = "{% url 'recipeadmin:editadmin_path' %}" class="linkref"> <h4>Edit Admin </h4> </a>
+                                <a href = "{% url 'recipeadmin:logout_path' %}" class="linkref"> <h4>Logout </h4> </a>
+                    </div>
+                          <div class="form-group">
                             <div class = "errormessages">
                                 {% for e in errors %}
                                 <p>{{e}}</p>
                                 {% endfor %}
                             </div>
-                            <h1> Add a new recipe </h1>
-                            <form class="form-horizontal" id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post" role="form">
+                         </div>
+                            <h2> Add a new recipe </h2><br>
+                            
+                            <form class="form-horizontal" id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post" role="form" enctype="multipart/form-data">
                              {% csrf_token %}
                                  <div class="form-group">
                                     <label for="DishName" class="col-sm-3 control-label">
@@ -29,10 +37,17 @@
                                     </div>
                                 </div>
                                  <div class="form-group">
+                                    <label for="procedure" class="col-sm-3 control-label">
+                                        Short Description </label>
+                                    <div class="col-sm-9">
+                                       <textarea name = "Description" rows = "8" cols = "80" placeholder="Enter the Description" ></textarea> 
+                                    </div>
+                                </div>
+                                 <div class="form-group">
                                     <label for="CookTime" class="col-sm-3 control-label">
                                         CookTime: </label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="CookTime" name = "CookTime" placeholder="Password" required>
+                                        <input type="text" class="form-control" id="CookTime" name = "CookTime" placeholder="Preparation time" required>
                                     </div>
                                 </div>
                                  <div class="form-group">
@@ -42,12 +57,13 @@
                                        <textarea name = "Procedure" rows = "8" cols = "80" placeholder="Enter the Process" required ></textarea> 
                                     </div>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label for="Ingredients" class="col-sm-3 control-label">
                                         Ingredients: </label>
                                     <div class="col-sm-9">
-                                        <div class="col-sm-offset-1 col-sm-5">
-                                            <p id="ingredient"></p><i id="imore" class="fa fa-plus"></i><br>
+                                        <div class="col-sm-offset-0 col-sm-6">
+                                            <p id="ingredient"></p>Add more <i id="imore" class="fa fa-plus"></i><br>
                                         </div>
                                         <input type="text" class="form-control" id="qty" name = "qty" placeholder="Quantity" required>
                                         <input type="text" class="form-control" id="ing" name = "igr" placeholder="Ingredient" required>
@@ -69,6 +85,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                <label for="foodimg">Upload Image</label><input name="foodimg" type="file">
                                 <div class="form-group">
                                     <label for="YouTube Link" class="col-sm-3 control-label">
                                         YouTube Link:</label>
@@ -84,15 +101,9 @@
                                     </div>
                                 </div>
                     </div>
-            </div>
-                            <div class="form-group">
-								<div class="col-sm-offset-11 col-sm-10">
-									<a href = "{% url 'recipeadmin:reg_path' %}"> <h4>Click here to add a new Admin </h4> </a><br>
-								</div>
-							</div>
-        </div>
-                                
+            </div>              
+        </div>                           
         </form>
-
+        
     </body>
 </html>

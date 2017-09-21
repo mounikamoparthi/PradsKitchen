@@ -46,6 +46,9 @@ class CategoryManager(models.Manager):
     def check_category(self,postData):
         results={'status': True, 'errors':[], 'category':None}
         print (postData)
+        
+        # for p in postData:
+
         # if not postData['CategoryName'] or len(postData['CategoryName']<3):
         #     print "CategoryName Error"
         #     results['status'] = False
@@ -72,6 +75,8 @@ class Recipes(models.Model):
     DishName = models.CharField(max_length=255)
     CookTime = models.CharField(max_length=78)
     Procedure = models.TextField()
+    Description = models.CharField(max_length=255, blank=True)
+    Image = models.ImageField(upload_to='images/%Y/%m/%d/', blank=True)
     CategoryId = models.ForeignKey(Category,related_name="createdcategory")
     YoutubeLink = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add = True)
