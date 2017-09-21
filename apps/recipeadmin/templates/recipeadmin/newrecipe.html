@@ -4,12 +4,13 @@
        {% load staticfiles %}
         <script rel = "javascript" src = "{% static 'recipeadmin/Js/jquery-3.2.1.min.js' %}"></script>
         <script rel = "javascript" src = "{% static 'recipeadmin/Js/app.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'recipeadmin/css/font-awesome-4.7.0/css/font-awesome.css' %}">
-        <link rel="stylesheet" href="{% static 'recipeadmin/css/newrecipe.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'recipeadmin/css/font-awesome-4.7.0/css/font-awesome.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'recipeadmin/css/newrecipe.css' %}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     
     <body>
+  
         <div class="container">
             <div class="row sidecolor">
                      <div class="row linkref">
@@ -26,7 +27,7 @@
                             </div>
                          </div>
                             <h2> Add a new recipe </h2><br>
-                            <form class="form-horizontal" id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post" role="form">
+                            <form class="form-horizontal" id = "recipeform" action="{% url 'recipeadmin:create_path' %}" method ="post" role="form" enctype="multipart/form-data">
                              {% csrf_token %}
                                  <div class="form-group">
                                     <label for="DishName" class="col-sm-3 control-label">
@@ -35,7 +36,14 @@
                                         <input type="text" class="form-control" id="DishName" name = "DishName" placeholder="Name of the Dish" required>
                                     </div>
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
+                                    <label for="Description" class="col-sm-3 control-label">
+                                        Short Description: </label>
+                                    <div class="col-sm-9">
+                                       <textarea name = "Description" rows = "8" cols = "80" placeholder="Enter the Description" ></textarea><br> 
+                                </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="CookTime" class="col-sm-3 control-label">
                                         CookTime: </label>
                                     <div class="col-sm-9">
@@ -77,6 +85,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="foodimg" class="col-sm-3 control-label">
+                                        Upload Image: </label>
+                                        <div class="col-sm-9">
+                                            <input name="foodimg" type="file" placeholder="Select an Image">
+                                         </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="YouTube Link" class="col-sm-3 control-label">
                                         YouTube Link:</label>
                                     <div class="col-sm-9">
@@ -90,10 +105,11 @@
                                            Create</button>
                                     </div>
                                 </div>
+                                </form>
                     </div>
             </div>              
         </div>                           
-        </form>
+        
 
     </body>
 </html>

@@ -1,10 +1,12 @@
-body { 
-  background: url('images/Rustic-background.jpg') no-repeat center center fixed; 
+ body { 
+  background: url('images/Rustic-background.jpg') repeat;
+  /* position: absolute;  */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
+  overflow-y: scroll;
+} 
 
 
 .form-group.last { margin-bottom:0px; }

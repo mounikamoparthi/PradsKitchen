@@ -9,6 +9,10 @@
 
     {%for r in recipes%}
       <h1 class="title">{{r.DishName}}</h1>
+      <h2 class="desc">{{r.Description}}</h2>
+      {% if r.Image %}
+      <img src="{{r.Image.url}}" width="240">
+      {% endif %}
       <h4 class="time">Cook time:{{r.CookTime}} mins</h4>
       <p class="prod">{{r.Procedure}}</p>
        <h3> Ingredients: </h3> 

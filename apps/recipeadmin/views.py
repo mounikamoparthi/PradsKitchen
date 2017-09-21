@@ -77,8 +77,8 @@ def new(request):
     return render(request, 'recipeadmin/newrecipe.html', context)
 
 def create(request):
-#   if not 'user_id' in request.session:
-#     return redirect(reverse('recipeadmin:index_path'))
+  if not 'user_id' in request.session:
+    return redirect(reverse('recipeadmin:index_path'))
     print("*"*100)
     print (type(request.POST["DishName"]))
     print("keys"*10)
@@ -131,6 +131,8 @@ def create(request):
         "CookTime":  str(request.POST['CookTime']),
         "YoutubeLink":  str(request.POST['YoutubeLink']),
     }
+    foodImage = request.FILES['foodimg']
+    description=request.POST['Description']
 
     # iresults=Ingredients.objects.check_ingredient(List_of_ingredients)
     # if (iresults['status']):
@@ -143,7 +145,7 @@ def create(request):
     results=Recipes.objects.check_recipe(I_data)
     if (results['status']):
         print("Category Id line 84"*10,catID)
-        Recipes.objects.create(DishName=I_data['DishName'],Procedure=I_data['Procedure'],CookTime=I_data['CookTime'],YoutubeLink=I_data['YoutubeLink'],CategoryId=catID)
+        Recipes.objects.create(DishName=I_data['DishName'],Procedure=I_data['Procedure'],CookTime=I_data['CookTime'],YoutubeLink=I_data['YoutubeLink'],CategoryId=catID,Image=foodImage, Description=description)
         Recipe_id=Recipes.objects.latest('id')
         for n in mixes:
             Mix.objects.create(Quantity=mixes[n][1],IngredientName=mixes[n][0],RecipeId=Recipe_id)
